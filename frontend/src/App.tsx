@@ -8,6 +8,7 @@ import FindDoctorPage from "./Components/FindDoctor/FindDoctor";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Onboarding from "./Components/Onboarding/Onboarding";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import Loading from "./Components/Loading/Loading";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
 
           <Route path="/symptom-checker" element={<Landing />} />
+          <Route path="/loading" element={<Loading />} />
           <Route path="/find-a-provider" element={<FindDoctorPage />} />
 
           <Route
