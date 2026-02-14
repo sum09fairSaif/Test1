@@ -31,14 +31,6 @@ function App() {
             }
           />
 
-<<<<<<< HEAD
-          {/* PUBLIC PAGES */}
-          <Route path="/symptom-checker" element={<Landing />} />
-          <Route path="/find-a-provider" element={<FindDoctorPage />} />
-
-          {/* PROTECTED ROUTES - require both auth and onboarding */}
-=======
->>>>>>> dccea0bb38f97710a512e7cc806187b7501d7130
           <Route
             path="/your-profile"
             element={

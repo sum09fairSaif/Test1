@@ -79,6 +79,7 @@
 .container {
   width: min(1100px, 92vw);
   margin: 0 auto;
+  padding-bottom: 1%;
   position: relative;
   z-index: 1;
 }
@@ -87,36 +88,40 @@ header {
   position: sticky;
   top: 0;
   z-index: 5;
-  padding: 16px 0;
+  padding: 1% 2vw 0;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   background: rgba(251, 249, 255, 0.55);
-  border-bottom: 1px solid rgba(140, 120, 246, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
   margin: 0;
-  padding: 0 4vw 10px;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  border: none !important;
+  border-bottom: none !important;
 }
 
 .logo-img {
-  height: 52px;
+  height: 62px;
   width: auto;
   display: block;
-  max-width: min(220px, 52vw);
+  max-width: min(240px, 52vw);
 }
 
 .logo-main {
-  height: 64px;
-  max-width: min(260px, 58vw);
+  height: 76px;
+  max-width: min(280px, 58vw);
 }
 
 .logo-text {
-  height: 40px;
-  max-height: 52px;
+  height: 48px;
+  max-height: 62px;
   margin-top: -6px;
 }
 
@@ -124,22 +129,29 @@ header .container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  border: none;
+  border-top: none;
+  width: auto;
+  margin: 0;
+  padding-bottom: 0;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
+  align-items: center;
   gap: 18px;
   padding: 0;
   margin: 0;
+  margin-top: -32px;
 }
 
 .nav-links a {
   text-decoration: none;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 18px;
   color: rgba(44, 44, 52, 0.85);
-  padding: 10px 14px;
+  padding: 12px 18px;
   border-radius: 999px;
   transition:
     transform 160ms ease,
