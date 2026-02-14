@@ -1,9 +1,55 @@
 import "./Landing.css";
+import { useEffect } from "react";
 
-export default function Landing() {
+function Landing() {
+  useEffect(() => {
+    document.title = "ConnectHER";
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      document.documentElement.style.setProperty("--parallax-y", `${y * 0.35}px`);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className="landing-page">
-      <h1>Welcome</h1>
+    <div className="landing-root">
+      <div className="parallax-bg" aria-hidden="true" />
+
+      <header>
+        <h1 className="logo">ConnectHER</h1>
+        <div className="container">
+          <nav>
+            <ul className="nav-links">
+              <li>
+                <a href="/login">Login</a>
+              </li>
+              <li>
+                <a href="/register">Register</a>
+              </li>
+              <li>
+                <a href="/your-profile">Your Profile</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <section id="hero">
+        <div className="container">
+          <div className="hero-content">
+            <h2>Accessible Women's Healthcare, Anytime</h2>
+            <h3>Understand your symptoms. Find the right care.</h3>
+          </div>
+        </div>
+      </section>
+
+      <section className="spacer" aria-hidden="true" />
     </div>
   );
 }
+
+export default Landing;
