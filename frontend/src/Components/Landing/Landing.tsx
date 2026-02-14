@@ -1,9 +1,23 @@
 import "./Landing.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Landing() {
+  const [userName, setUserName] = useState("Guest");
+
   useEffect(() => {
-    document.title = "ConnectHER";
+    // Simulate fetching user data
+    const fetchUserData = async () => {
+      try {
+        // Replace with actual API call
+        const user = { name: "Guest" };
+        setUserName(user.name);
+        document.title = `ConnectHER - Welcome, ${user.name}`;
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -24,6 +38,7 @@ function Landing() {
 
       <header>
         <h1 className="logo">ConnectHER</h1>
+        <p>Welcome, {userName}!</p>
         <div className="container">
           <nav>
             <ul className="nav-links">
