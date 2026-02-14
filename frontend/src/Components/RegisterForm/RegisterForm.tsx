@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { FaUser, FaLock, FaAt } from 'react-icons/fa';
 import './RegisterForm.css';
 
 const RegisterForm: React.FC = () => {
@@ -51,82 +52,71 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1 className="auth-logo">ConnectHER</h1>
-          <h2>Create Account</h2>
-          <p>Join our healthcare community today</p>
-        </div>
+    <div className="register-page">
+      <div className="wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Register</h1>
 
-        <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="error-message">{error}</div>}
 
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
+          <div className="input-box">
             <input
               type="text"
-              id="name"
+              placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your full name"
               disabled={loading}
-              autoComplete="name"
+              required
             />
+            <FaUser className="icon" />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+          <div className="input-box">
             <input
               type="email"
-              id="email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
               disabled={loading}
-              autoComplete="email"
+              required
             />
+            <FaAt className="icon" />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="input-box">
             <input
               type="password"
-              id="password"
+              placeholder="Password (min. 6 characters)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password (min. 6 characters)"
               disabled={loading}
-              autoComplete="new-password"
+              required
             />
+            <FaLock className="icon" />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+          <div className="input-box">
             <input
               type="password"
-              id="confirmPassword"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
               disabled={loading}
-              autoComplete="new-password"
+              required
             />
+            <FaLock className="icon" />
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? 'Creating account...' : 'Create Account'}
+          <button type="submit" disabled={loading}>
+            {loading ? 'Creating account...' : 'Register'}
           </button>
-        </form>
 
-        <div className="auth-footer">
-          <p>
-            Already have an account? <Link to="/login">Sign in</Link>
-          </p>
-          <p>
-            <Link to="/">Back to Home</Link>
-          </p>
-        </div>
+          <div className="login-link">
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );

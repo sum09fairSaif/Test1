@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { FaLock, FaAt } from 'react-icons/fa';
 import './LoginForm.css';
 
 const LoginForm: React.FC = () => {
@@ -37,56 +38,55 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1 className="auth-logo">ConnectHER</h1>
-          <h2>Welcome Back</h2>
-          <p>Sign in to access your healthcare dashboard</p>
-        </div>
+    <div className="login-page">
+      <div className="wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Log In</h1>
 
-        <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="error-message">{error}</div>}
 
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+          <div className="input-box">
             <input
               type="email"
-              id="email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
               disabled={loading}
-              autoComplete="email"
+              required
             />
+            <FaAt className="icon" />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="input-box">
             <input
               type="password"
-              id="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
               disabled={loading}
-              autoComplete="current-password"
+              required
             />
+            <FaLock className="icon" />
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+          <div className="remember-forgot">
+            <label>
+              <input type="checkbox" />
+              Remember me
+            </label>
+            <a href="#">Forgot Password?</a>
+          </div>
 
-        <div className="auth-footer">
-          <p>
-            Don't have an account? <Link to="/register">Create one</Link>
-          </p>
-          <p>
-            <Link to="/">Back to Home</Link>
-          </p>
-        </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Signing in...' : 'Login'}
+          </button>
+
+          <div className="register-link">
+            <p>
+              Don't have an account? <Link to="/register">Register</Link>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );
