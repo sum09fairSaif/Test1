@@ -1,11 +1,18 @@
 import "./Landing.css";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import mainLogo from "../Assets/connecther-logo.png";
 import textLogo from "../Assets/text-logo.png";
 import heroImage from "../Assets/doctor-consultation.png";
 
 function Landing() {
+  const { user, isAuthenticated } = useAuth();
+
   useEffect(() => {
+    const displayName = user?.name || "Guest";
+    document.title = `ConnectHER - Welcome, ${displayName}`;
+
     const onScroll = () => {
       const y = window.scrollY;
       document.documentElement.style.setProperty(
@@ -17,7 +24,7 @@ function Landing() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [user?.name]);
 
   return (
     <div className="landing-root">
@@ -32,13 +39,17 @@ function Landing() {
           <nav>
             <ul className="nav-links">
               <li>
-                <a href="/login">Login</a>
+                <Link to={isAuthenticated ? "/your-profile" : "/login"}>
+                  {isAuthenticated ? "Logged In" : "Login"}
+                </Link>
               </li>
               <li>
-                <a href="/register">Register</a>
+                <Link to="/register">Register</Link>
               </li>
               <li>
-                <a href="/your-profile">Your Profile</a>
+                <Link to={isAuthenticated ? "/your-profile" : "/login"}>
+                  Your Profile
+                </Link>
               </li>
             </ul>
           </nav>
@@ -52,12 +63,12 @@ function Landing() {
               <h2>Accessible Women's Healthcare, Anytime</h2>
               <h3>Understand your symptoms. Find the right care.</h3>
               <div className="hero-actions">
-                <a href="/symptom-checker" className="service-button">
+                <Link to="/symptom-checker" className="service-button">
                   Symptom Checker
-                </a>
-                <a href="/find-a-provider" className="service-button">
+                </Link>
+                <Link to="/find-a-provider" className="service-button">
                   Find a Provider
-                </a>
+                </Link>
               </div>
             </div>
             <div className="hero-visual">
