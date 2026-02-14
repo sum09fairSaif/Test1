@@ -1,26 +1,18 @@
 import React from "react";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
+import { FaAt } from "react-icons/fa";
 
 const LoginForm = () => {
   return (
     <div className="login-page">
       <div className="wrapper">
         <form action="">
-          <h1>Parent/Caregiver Login</h1>
+          <h1>Log In</h1>
           <div className="input-box">
-            <input type="email" placeholder="Parent/Caregiver Email" required />
-            <FaUser className="icon" />
-          </div>
-          <div className="input-box">
-            <input
-              type="text"
-              placeholder="Child's First + Last Name"
-              required
-            />
-            <FaUser className="icon" />
+            <input type="email" placeholder="Email" required />
+            <FaAt className="icon" />
           </div>
           <div className="input-box">
             <input type="password" placeholder="Password" required />

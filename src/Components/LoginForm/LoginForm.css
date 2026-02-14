@@ -11,8 +11,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: url("/src/Components/Assets/background-login-register-forms.png")
-    no-repeat center center fixed;
+  background: url("/src/Components/Assets/background-login-form.png") no-repeat
+    center center fixed;
   background-size: cover;
 }
 
