@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,17 +9,19 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
-  requireOnboarding = true
+  requireOnboarding = true,
 }) => {
-  const { isAuthenticated, hasCompletedOnboarding } = useAuth();
+  const { isAuthenticated, hasCompletedOnboarding, isAuthLoading } = useAuth();
+
+  if (isAuthLoading) {
+    return null;
+  }
 
   if (!isAuthenticated) {
-    // Redirect to login if not authenticated
     return <Navigate to="/login" replace />;
   }
 
   if (requireOnboarding && !hasCompletedOnboarding) {
-    // Redirect to onboarding if not completed
     return <Navigate to="/onboarding" replace />;
   }
 

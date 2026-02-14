@@ -1,26 +1,17 @@
 import "./Landing.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import mainLogo from "../Assets/connecther-logo.png";
 import textLogo from "../Assets/text-logo.png";
 import heroImage from "../Assets/doctor-consultation.png";
 
 function Landing() {
-  const [userName, setUserName] = useState("Guest");
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // Simulate fetching user data
-    const fetchUserData = async () => {
-      try {
-        // Replace with actual API call
-        const user = { name: "Guest" };
-        setUserName(user.name);
-        document.title = `ConnectHER - Welcome, ${user.name}`;
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      }
-    };
-
-    fetchUserData();
+    const displayName = user?.name || "Guest";
+    document.title = `ConnectHER - Welcome, ${displayName}`;
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -33,7 +24,7 @@ function Landing() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [user?.name]);
 
   return (
     <div className="landing-root">
@@ -44,19 +35,22 @@ function Landing() {
           <img src={mainLogo} alt="" className="logo-img logo-main" />
           <img src={textLogo} alt="ConnectHER" className="logo-img logo-text" />
         </h1>
-        <h1 className="logo">ConnectHER</h1>
-        <p>Welcome, {userName}!</p>
+        <p>Welcome, {isAuthenticated ? user?.name || "User" : "Guest"}!</p>
         <div className="container">
           <nav>
             <ul className="nav-links">
               <li>
-                <a href="/login">Login</a>
+                <Link to={isAuthenticated ? "/your-profile" : "/login"}>
+                  {isAuthenticated ? "Logged In" : "Login"}
+                </Link>
               </li>
               <li>
-                <a href="/register">Register</a>
+                <Link to="/register">Register</Link>
               </li>
               <li>
-                <a href="/your-profile">Your Profile</a>
+                <Link to={isAuthenticated ? "/your-profile" : "/login"}>
+                  Your Profile
+                </Link>
               </li>
             </ul>
           </nav>
@@ -70,12 +64,12 @@ function Landing() {
               <h2>Accessible Women's Healthcare, Anytime</h2>
               <h3>Understand your symptoms. Find the right care.</h3>
               <div className="hero-actions">
-                <a href="/symptom-checker" className="service-button">
+                <Link to="/symptom-checker" className="service-button">
                   Symptom Checker
-                </a>
-                <a href="/find-a-provider" className="service-button">
+                </Link>
+                <Link to="/find-a-provider" className="service-button">
                   Find a Provider
-                </a>
+                </Link>
               </div>
             </div>
             <div className="hero-visual">
