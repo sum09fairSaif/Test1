@@ -3,32 +3,25 @@ import "./RegisterForm.css";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
+import { FaAt } from "react-icons/fa";
 
 const RegisterForm = () => {
   return (
     <div className="register-page">
       <div className="wrapper">
         <form action="">
-          <h1>Parent/Caregiver Registration</h1>
+          <h1>Register</h1>
           <div className="input-box">
-            <input
-              type="text"
-              placeholder="Child's First + Last Name"
-              required
-            />
+            <input type="text" placeholder="First Name" required />
             <FaUser className="icon" />
           </div>
           <div className="input-box">
-            <input
-              type="text"
-              placeholder="Parent/Caregiver First + Last Name"
-              required
-            />
+            <input type="text" placeholder="Last Name" required />
             <FaUser className="icon" />
           </div>
           <div className="input-box">
-            <input type="email" placeholder="Parent/Caregiver Email" required />
-            <FaUser className="icon" />
+            <input type="email" placeholder="Email" required />
+            <FaAt className="icon" />
           </div>
           <div className="input-box">
             <input type="password" placeholder="Password" required />

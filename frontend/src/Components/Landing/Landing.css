@@ -1,12 +1,22 @@
 :root {
   --parallax-y: 0px;
+
+  --bg: #f8f6f2;
+  --surface: #ffffff;
+  --primary: #2e5b7a;
+  --secondary: #6fa7b3;
+  --accent: #e8a87c;
+  --text: #1e2a32;
+  --muted: #5f6b73;
+  --border: #d9e2e8;
 }
 
 .landing-root {
   position: relative;
   min-height: 200vh;
   overflow-x: hidden;
-  background: #f8f4ef;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .parallax-bg {
@@ -14,19 +24,29 @@
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 20% 20%, #ffd9b8 0%, transparent 35%),
-    radial-gradient(circle at 80% 30%, #c7e7ff 0%, transparent 35%),
-    linear-gradient(180deg, #fffaf5, #f1f7ff);
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(232, 168, 124, 0.34) 0%,
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 84% 26%,
+      rgba(111, 167, 179, 0.26) 0%,
+      transparent 34%
+    ),
+    linear-gradient(180deg, #fffaf5 0%, #f4f8fb 60%, #f8f6f2 100%);
   transform: translateY(calc(var(--parallax-y) * -1));
   will-change: transform;
 }
 
-header {
-  background-color: #bed0de;
-  padding: 15px 40px;
-  border-radius: 10px;
-  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.3);
-  margin: 1rem;
+.landing-root header {
+  margin: 1rem auto;
+  max-width: 1140px;
+  background: color-mix(in srgb, var(--surface) 82%, var(--secondary) 18%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(46, 91, 122, 0.14);
+  padding: 0.9rem 1.25rem;
 }
 
 .container {
@@ -36,37 +56,81 @@ header {
 
 .logo {
   margin: 0;
+  letter-spacing: 0.02em;
+  color: var(--primary);
 }
 
 .nav-links {
   list-style: none;
-  padding: 0;
-  margin: 0.5rem 0 0;
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.65rem 0 0;
+  padding: 0;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #17324a;
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 650;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.nav-links a:hover {
+  background: color-mix(in srgb, var(--secondary) 22%, #ffffff 78%);
+  color: var(--text);
 }
 
 #hero {
-  padding: 6rem 2rem 2rem;
+  padding: 7rem 1.25rem 2rem;
 }
 
-.hero-content h2,
+.hero-content {
+  max-width: 680px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem 1.25rem;
+  backdrop-filter: blur(2px);
+}
+
+.hero-content h2 {
+  margin: 0 0 0.8rem;
+  color: var(--primary);
+  line-height: 1.18;
+}
+
 .hero-content h3 {
-  margin: 0 0 0.75rem;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .spacer {
   height: 120vh;
 }
 
+@media (max-width: 720px) {
+  .landing-root header {
+    margin: 0.75rem;
+    padding: 0.8rem 1rem;
+  }
+
+  #hero {
+    padding-top: 5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .parallax-bg {
     transform: none;
+  }
+
+  .nav-links a {
+    transition: none;
   }
 }
