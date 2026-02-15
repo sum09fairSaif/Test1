@@ -26,6 +26,10 @@ import {
   PiThermometerHot,
   PiSunHorizon,
   PiBatteryLow,
+  PiBatteryEmpty,
+  PiBatteryMedium,
+  PiBatteryHigh,
+  PiBatteryFull,
   PiBrain,
   PiWind,
   PiFlower,
@@ -88,7 +92,13 @@ const moods: SymptomMoodItem[] = [
   { label: "Productive", icon: <TbStarFilled size={18} />, color: "#95DAB6" },
 ];
 
-const energyEmojis = ["😩", "😕", "😐", "🙂", "💪"];
+const energyIcons = [
+  <PiBatteryEmpty key="1" size={22} />,
+  <PiBatteryLow key="2" size={22} />,
+  <PiBatteryMedium key="3" size={22} />,
+  <PiBatteryHigh key="4" size={22} />,
+  <PiBatteryFull key="5" size={22} />,
+];
 
 function ChipButton({ item, selected, onClick, disabled }: ChipButtonProps) {
   return (
@@ -199,7 +209,7 @@ export default function SymptomTracker() {
                 className="energy-btn"
                 data-active={energyLevel === level}
               >
-                <span className="energy-emoji">{energyEmojis[level - 1]}</span>
+                <span className="energy-icon">{energyIcons[level - 1]}</span>
                 <span className="energy-num">{level}</span>
               </button>
             ))}
@@ -400,7 +410,16 @@ export default function SymptomTracker() {
           border-color: #D4B8D2;
           background: #ECC8EA;
         }
-        .energy-emoji { font-size: 22px; line-height: 1; }
+        .energy-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1;
+          color: #B5A8A0;
+        }
+        .energy-btn[data-active="true"] .energy-icon {
+          color: #7A4E8B;
+        }
         .energy-num {
           font-size: 12px;
           font-weight: 600;
