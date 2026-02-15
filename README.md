@@ -1,4 +1,4 @@
-# ConnectHer: An Early Pregnancy Fitness Platform
+# ConnectHer: An Early Pregnancy Fitness Platform 🧘‍♀️ 
 
 A web application helping women in early pregnancy stay active safely by providing personalized workout recommendations based on their daily symptoms, energy levels, and mood.
 
@@ -13,7 +13,6 @@ By meeting women where they are physically and mentally, we empower them to stay
 * **Daily personalized check-in** - Quick assessment of symptoms (nausea, fatigue, dizziness), mood, and energy level
 * **Smart workout matching** - Algorithm recommends 5-15 minute first-trimester-safe workouts based on user's current state
 * **Curated video library** - Pre-vetted exercises across intensity levels (gentle stretching to moderate strength training)
-* **Favorites library** - Save your preferred workouts for quick access
 * **Safety-first design** - All workouts vetted for first trimester safety with clear modifications and rest encouragement
 * **Removes guesswork** - Eliminates the "is this safe?" anxiety that keeps pregnant women sedentary
 * **Builds healthy habits** - Encourages consistent movement adapted to the fluctuating reality of early pregnancy
@@ -23,10 +22,9 @@ By meeting women where they are physically and mentally, we empower them to stay
 **Frontend:** React + TypeScript + Vite  
 **Backend:** Node.js + Express + TypeScript  
 **Database:** PostgreSQL (via Supabase)  
-**Auth:** Supabase Authentication  
 **Auth0:** User Authentication for User Login/Account Creation   
 **AI:** Gemini API for intelligent recommendations and chatbot   
-**ElevenLabs + OpenAI:** API Keys used for Accessibility, enabling people fluent/native/proficient in languages other than English to navigate the website
+**ElevenLabs + OpenAI:** Voice agent API for users to navigate the website in five other languages
 
 ## Get Started
 
@@ -66,9 +64,9 @@ By meeting women where they are physically and mentally, we empower them to stay
 4. **Run the app**
    ```bash
    # Frontend
-   npm run dev
+   cd frontend && npm run dev
    
-   # Backend (in another terminal)
+   # Backend (separate terminal)
    cd backend && npm run dev
    ```
 ## Safety
