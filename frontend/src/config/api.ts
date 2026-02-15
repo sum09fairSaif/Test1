@@ -23,4 +23,7 @@ export const API_ENDPOINTS = {
   PROFILE: (userId: string) => `/profile/${userId}`,
   CREATE_PROFILE: '/profile',
   UPDATE_PROFILE: (userId: string) => `/profile/${userId}`,
+
+  // Doctors
+  DOCTORS_SEARCH: '/doctors/search',
 } as const;

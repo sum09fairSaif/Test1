@@ -7,6 +7,8 @@ import type {
   Favorite,
   AddFavoriteRequest,
   UserProfile,
+  DoctorSearchResult,
+  DoctorSearchResponse,
 } from "../types/api";
 
 // DEMO USER ID - Hardcoded for demo purposes
@@ -29,8 +31,24 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
-      const message = body.error || body.message || `HTTP error! status: ${response.status}`;
+      const rawBody = await response.text().catch(() => "");
+      let message = `HTTP error! status: ${response.status}`;
+
+      if (rawBody) {
+        try {
+          const parsedBody = JSON.parse(rawBody) as {
+            error?: string;
+            message?: string;
+          };
+          message = parsedBody.error || parsedBody.message || message;
+        } catch {
+          const compact = rawBody.replace(/\s+/g, " ").trim();
+          if (compact) {
+            message = compact.slice(0, 200);
+          }
+        }
+      }
+
       throw new Error(message);
     }
 
@@ -138,6 +156,31 @@ class ApiService {
       method: "PUT",
       body: JSON.stringify(data),
     });
+  }
+
+  // Doctors API
+  async searchDoctors(params: {
+    zip?: string;
+    specialty?: string;
+    city?: string;
+    state?: string;
+    limit?: number;
+  }): Promise<DoctorSearchResult[]> {
+    const queryParams: Record<string, string> = {};
+
+    if (params.zip) queryParams.zip = params.zip;
+    if (params.specialty) queryParams.specialty = params.specialty;
+    if (params.city) queryParams.city = params.city;
+    if (params.state) queryParams.state = params.state;
+    if (params.limit) queryParams.limit = String(params.limit);
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    const endpoint = queryString
+      ? `${API_ENDPOINTS.DOCTORS_SEARCH}?${queryString}`
+      : API_ENDPOINTS.DOCTORS_SEARCH;
+
+    const response = await this.fetch<DoctorSearchResponse>(endpoint);
+    return response.doctors || [];
   }
 }
 

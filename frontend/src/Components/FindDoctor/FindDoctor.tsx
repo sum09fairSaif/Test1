@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import "./FindDoctor.css";
 import FiltersBar from "./components/FiltersBar";
 import MapPanel from "./components/MapPanel";
@@ -9,30 +9,116 @@ export type Doctor = {
   id: string;
   name: string;
   specialty: string;
-  distanceMiles: number;
-  rating: number;
+  distanceMiles: number | null;
+  rating: number | null;
   accepts: string;
   telehealth: boolean;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  phone?: string;
+  npi?: string;
 };
 
-const MOCK_DOCTORS: Doctor[] = [
+const BOSTON_DOCTORS: Doctor[] = [
   {
-    id: "1",
-    name: "Dr. Jane Doe",
-    specialty: "OB-GYN",
-    distanceMiles: 2.1,
-    rating: 4.9,
-    accepts: "Aetna",
-    telehealth: true,
+    id: "npi-1346222692",
+    name: "Dr. Jodi Abbott",
+    specialty: "Obstetrics & Gynecology, Maternal & Fetal Medicine",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1346222692",
   },
   {
-    id: "2",
-    name: "Dr. Amy Patel",
-    specialty: "Women's Health",
-    distanceMiles: 4.9,
-    rating: 4.7,
-    accepts: "Cigna",
-    telehealth: true,
+    id: "npi-1881804235",
+    name: "Dr. Alireza Abdollah Shamshirsaz",
+    specialty: "Obstetrics & Gynecology",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1881804235",
+  },
+  {
+    id: "npi-1598228967",
+    name: "Dr. Elizabeth Adams",
+    specialty: "Obstetrics & Gynecology, Critical Care Medicine",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1598228967",
+  },
+  {
+    id: "npi-1043604283",
+    name: "Dr. Amma Agyemang",
+    specialty: "Obstetrics & Gynecology, Gynecologic Oncology",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1043604283",
+  },
+  {
+    id: "npi-1851522486",
+    name: "Dr. Mobolaji Ajao",
+    specialty: "Obstetrics & Gynecology, Gynecology",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1851522486",
+  },
+  {
+    id: "npi-1134143290",
+    name: "Dr. John Al-Jamal",
+    specialty:
+      "Obstetrics & Gynecology, Urogynecology and Reconstructive Pelvic Surgery",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1134143290",
+  },
+  {
+    id: "npi-1669457735",
+    name: "Dr. Rebecca Allen",
+    specialty: "Obstetrics & Gynecology, Gynecology",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1669457735",
+  },
+  {
+    id: "npi-1740485762",
+    name: "Dr. Mallika Anand",
+    specialty:
+      "Obstetrics & Gynecology, Urogynecology and Reconstructive Pelvic Surgery",
+    distanceMiles: null,
+    rating: null,
+    accepts: "Insurance info unavailable",
+    telehealth: false,
+    city: "Boston",
+    state: "MA",
+    npi: "1740485762",
   },
 ];
 
@@ -40,11 +126,41 @@ export default function FindDoctorPage() {
   const [zip, setZip] = useState("");
   const [insurance, setInsurance] = useState("");
   const [specialty, setSpecialty] = useState("");
-  const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null);
-
-  const doctors = useMemo(() => MOCK_DOCTORS, []);
+  const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(
+    BOSTON_DOCTORS[0]?.id || null,
+  );
+  const [doctors, setDoctors] = useState<Doctor[]>(BOSTON_DOCTORS);
+  const [doctorError, setDoctorError] = useState("");
 
   const selectedDoctor = doctors.find((d) => d.id === selectedDoctorId) ?? null;
+
+  const runDoctorSearch = (searchZip: string, searchSpecialty: string) => {
+    const normalizedZip = searchZip.trim();
+    const isValidZip = /^\d{5}(-\d{4})?$/.test(normalizedZip);
+
+    if (normalizedZip && !isValidZip) {
+      alert("Please enter a valid US ZIP code (12345 or 12345-6789).");
+      return;
+    }
+
+    setDoctorError("");
+    const normalizedSpecialty = searchSpecialty.trim().toLowerCase();
+
+    const filteredDoctors = BOSTON_DOCTORS.filter((doctor) => {
+      if (!normalizedSpecialty) return true;
+      return (
+        doctor.specialty.toLowerCase().includes(normalizedSpecialty) ||
+        doctor.name.toLowerCase().includes(normalizedSpecialty)
+      );
+    });
+
+    setDoctors(filteredDoctors);
+    setSelectedDoctorId(filteredDoctors[0]?.id || null);
+
+    if (filteredDoctors.length === 0) {
+      setDoctorError("No doctors found for the current filters.");
+    }
+  };
 
   return (
     <div className="fd-root">
@@ -57,24 +173,7 @@ export default function FindDoctorPage() {
             onZipChange={setZip}
             onInsuranceChange={setInsurance}
             onSpecialtyChange={setSpecialty}
-            onSearch={() => {
-              const normalizedZip = zip.trim();
-              const isValidZip = /^\d{5}(-\d{4})?$/.test(normalizedZip);
-
-              if (normalizedZip && !isValidZip) {
-                alert(
-                  "Please enter a valid US ZIP code (12345 or 12345-6789).",
-                );
-                return;
-              }
-
-              // hook API later
-              console.log("Search:", {
-                zip: normalizedZip,
-                insurance: insurance.trim(),
-                specialty: specialty.trim(),
-              });
-            }}
+            onSearch={() => runDoctorSearch(zip, specialty)}
           />
           <MapPanel />
         </section>
@@ -84,6 +183,8 @@ export default function FindDoctorPage() {
             doctors={doctors}
             selectedDoctorId={selectedDoctorId}
             onSelectDoctor={setSelectedDoctorId}
+            isLoading={false}
+            error={doctorError}
           />
           <BookingPanel
             doctor={selectedDoctor}

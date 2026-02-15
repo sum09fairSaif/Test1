@@ -75,3 +75,26 @@ export interface UserProfile {
   created_at: string;
   updated_at: string;
 }
+
+export interface DoctorSearchResult {
+  id: string;
+  name: string;
+  specialty: string;
+  distanceMiles: number | null;
+  rating: number | null;
+  accepts: string;
+  telehealth: boolean;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  phone?: string;
+  npi?: string;
+}
+
+export interface DoctorSearchResponse {
+  success: boolean;
+  doctors: DoctorSearchResult[];
+  source?: string;
+  error?: string;
+}

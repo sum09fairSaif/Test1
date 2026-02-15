@@ -4,41 +4,68 @@ type Props = {
   doctors: Doctor[];
   selectedDoctorId: string | null;
   onSelectDoctor: (id: string) => void;
+  isLoading?: boolean;
+  error?: string;
 };
 
 export default function DoctorList({
   doctors,
   selectedDoctorId,
   onSelectDoctor,
+  isLoading = false,
+  error = "",
 }: Props) {
+  const hasDoctors = doctors.length > 0;
+
   return (
     <div className="card pad">
-      <h2 style={{ margin: 0, marginBottom: 12 }}>Find a Doctor</h2>
+      <h2 className="fd-title">Find a Doctor</h2>
+      <p className="fd-source-note">
+        Source: NPI Registry. Insurance acceptance and appointment availability
+        may vary.
+      </p>
 
-      <div style={{ display: "grid", gap: 12 }}>
-        {doctors.map((d) => {
-          const active = d.id === selectedDoctorId;
+      <div className="fd-doctor-list">
+        {isLoading && (
+          <div className="fd-message-muted">Loading doctors...</div>
+        )}
+
+        {!isLoading && !!error && (
+          <div className="fd-message-error">{error}</div>
+        )}
+
+        {!isLoading && !error && !hasDoctors && (
+          <div className="fd-message-muted">No doctors found.</div>
+        )}
+
+        {doctors.map((doctor) => {
+          const active = doctor.id === selectedDoctorId;
+          const metaParts: string[] = [doctor.specialty];
+
+          if (typeof doctor.distanceMiles === "number") {
+            metaParts.push(`${doctor.distanceMiles} miles`);
+          }
+
+          if (typeof doctor.rating === "number") {
+            metaParts.push(`Rating ${doctor.rating}`);
+          }
+
           return (
             <button
-              key={d.id}
-              onClick={() => onSelectDoctor(d.id)}
-              style={{
-                textAlign: "left",
-                borderRadius: 18,
-                border: active
-                  ? "2px solid rgba(139,124,246,0.55)"
-                  : "1px solid rgba(140,120,246,0.18)",
-                background: "rgba(255,255,255,0.72)",
-                padding: 12,
-                cursor: "pointer",
-              }}
+              key={doctor.id}
+              onClick={() => onSelectDoctor(doctor.id)}
+              className={`fd-doctor-card ${active ? "is-active" : ""}`}
             >
-              <div style={{ fontWeight: 800 }}>{d.name}</div>
-              <div style={{ color: "rgba(44,44,52,0.7)", marginTop: 2 }}>
-                {d.specialty} • {d.distanceMiles} miles • ⭐ {d.rating}
+              <div className="fd-doctor-name">{doctor.name}</div>
+              <div className="fd-doctor-meta">
+                {metaParts.join(" | ")}
               </div>
-              <div style={{ color: "rgba(44,44,52,0.6)", marginTop: 6 }}>
-                Accepts: {d.accepts} {d.telehealth ? "• Telehealth" : ""}
+              <div className="fd-doctor-extra">
+                Accepts: {doctor.accepts}
+                {doctor.telehealth ? " | Telehealth" : ""}
+                {doctor.city && doctor.state
+                  ? ` | ${doctor.city}, ${doctor.state}`
+                  : ""}
               </div>
             </button>
           );

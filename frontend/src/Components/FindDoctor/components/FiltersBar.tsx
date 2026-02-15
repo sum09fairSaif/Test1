@@ -23,11 +23,11 @@ export default function FiltersBar({
     <div className="card pad">
       <input
         placeholder="Search your symptoms..."
-        style={inputStyle}
+        className="fd-input"
         aria-label="Search symptoms"
       />
 
-      <div style={{ display: "grid", gap: 10, marginTop: 10 }}>
+      <div className="fd-filters-grid">
         <input
           type="text"
           value={zip}
@@ -35,63 +35,42 @@ export default function FiltersBar({
           placeholder="Location: Enter ZIP code (e.g., 10001)"
           inputMode="numeric"
           autoComplete="postal-code"
-          style={inputStyle}
+          className="fd-input"
           aria-label="ZIP code"
         />
 
-        <input
-          list="insurance-options"
-          type="text"
+        <select
           value={insurance}
           onChange={(e) => onInsuranceChange(e.target.value)}
-          placeholder="Insurance: Select or type insurance"
-          style={inputStyle}
+          className="fd-input"
           aria-label="Insurance"
-        />
-        <datalist id="insurance-options">
+        >
+          <option value="">Insurance: Select insurance</option>
           {insuranceOptions.map((option) => (
-            <option key={option} value={option} />
+            <option key={option} value={option}>
+              {option}
+            </option>
           ))}
-        </datalist>
+        </select>
 
-        <input
-          list="specialty-options"
-          type="text"
+        <select
           value={specialty}
           onChange={(e) => onSpecialtyChange(e.target.value)}
-          placeholder="Specialty: Select or type specialty"
-          style={inputStyle}
+          className="fd-input"
           aria-label="Specialty"
-        />
-        <datalist id="specialty-options">
+        >
+          <option value="">Specialty: Select specialty</option>
           {specialtyOptions.map((option) => (
-            <option key={option} value={option} />
+            <option key={option} value={option}>
+              {option}
+            </option>
           ))}
-        </datalist>
+        </select>
 
-        <button onClick={onSearch} style={primaryBtn}>
+        <button onClick={onSearch} className="fd-primary-btn">
           Find a Doctor Nearby -&gt;
         </button>
       </div>
     </div>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 14,
-  border: "1px solid rgba(140,120,246,0.22)",
-  outline: "none",
-  background: "rgba(255,255,255,0.7)",
-};
-
-const primaryBtn: React.CSSProperties = {
-  padding: "12px 14px",
-  borderRadius: 14,
-  border: "none",
-  color: "white",
-  fontWeight: 700,
-  background: "linear-gradient(135deg, #8B7CF6, #F6B8D8)",
-  cursor: "pointer",
-};
