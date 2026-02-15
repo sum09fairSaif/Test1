@@ -8,15 +8,10 @@ import heroImage from "../Assets/doctor-consultation.png";
 import womanYoga from "../Assets/woman-yoga.png";
 
 function Landing() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navWrapRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const displayName = user?.name || "Guest";
-    document.title = `ConnectHER - Welcome, ${displayName}`;
-  }, [user?.name]);
 
   useEffect(() => {
     setMenuOpen(false);
