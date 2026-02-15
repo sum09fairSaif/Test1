@@ -56,7 +56,7 @@ function AppRoutes() {
         <Route path="/register" element={<RegisterForm />} />
 
         <Route path="/symptom-checker" element={<SymptomChecker />} />
-        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/recommendations" element={<WorkoutRecommendations />} />
         <Route path="/loading" element={<Loading />} />
         <Route
           path="/workout-recommendations"
